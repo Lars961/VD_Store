@@ -35,8 +35,8 @@ public class ProductController {
 
     @GetMapping("/product/byIdProduct/{productId}")
     @ResponseBody
-    public String filterByIdProduct(@PathVariable(name = "productId") Integer productId){
 
+    public Product filterByIdProduct(@PathVariable(name = "productId") Integer productId){
 
         return productService.getByIdProduct(productId);
     }

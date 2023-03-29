@@ -1,43 +1,48 @@
 package mx.com.vd_store.service.impl;
 
 import mx.com.vd_store.entity.Product;
+import mx.com.vd_store.repository.ProductRepository;
 import mx.com.vd_store.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service(value = "ProductService")
 public class ProductServiceImpl implements ProductService {
 
-
+    @Autowired
+    private  ProductRepository productRepository;
     @Override
     public List<Product> listAllProducts() {
-        return null;
+        return productRepository.findAll();
     }
 
     @Override
     public Product createProduct(Product product) {
-        return null;
+        return productRepository.save(product);
     }
 
     @Override
+    //.orElse te regresa lo que le indiques si la indicacion principal no se cumple
     public Product getByIdProduct(Integer id) {
-        return null;
+        return productRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Product> getByNameProduct(String name) {
-        return null;
+        return productRepository.findByName(name);
     }
 
     @Override
     public List<Product> getByBrandProduct(String brand) {
-        return null;
+        return productRepository.findByBrand(brand);
     }
 
     @Override
     public List<Product> getByTypeProduct(String type) {
-        return null;
+        return productRepository.findByType(type);
     }
 
     @Override
