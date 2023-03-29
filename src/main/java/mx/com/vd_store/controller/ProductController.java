@@ -4,6 +4,7 @@ package mx.com.vd_store.controller;
 import mx.com.vd_store.entity.Product;
 import mx.com.vd_store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public class ProductController {
 
     //
     @Autowired
+    //@Qualifier Sirve para seleccionar tu clase de implementacion de servicio ** debe incluir tu clase implementacion la notacion @Service y el nombre designado para dicha implementacion
+    @Qualifier("ProductService")
     private ProductService productService;
 
     @GetMapping("/vdProduct")
@@ -30,11 +33,12 @@ public class ProductController {
         return productService.createProduct(product);
     }
 
-    @GetMapping("/product/byIdProduct/{id}")
+    @GetMapping("/product/byIdProduct/{productId}")
     @ResponseBody
-    public String filterByIdProduct(@PathVariable String idProduct){
+    public String filterByIdProduct(@PathVariable(name = "productId") Integer productId){
 
-        return productService.getByIdProduct(Product, idProduct);
+
+        return productService.getByIdProduct(productId);
     }
 
 }
