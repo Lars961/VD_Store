@@ -5,6 +5,8 @@ import mx.com.vd_store.entity.Product;
 import mx.com.vd_store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +24,17 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/vdProduct")
-    public List<Product> listAllProduct() {
+    public ResponseEntity<List<Product>>listAllProduct() {
 
-        return productService.listAllProducts();
+        return ResponseEntity.ok(productService.listAllProducts());
+    }
+
+
+    //Crear el filtro para la busqueda de productos segun su tipo
+    @GetMapping("/vdProduct/{filter}")
+    public ResponseEntity<List<Product>>listAllProductByFilter(@PathVariable(name = "filter") String filter) {
+
+        return ResponseEntity.ok(productService.listAllProducts());
     }
 
     @PostMapping("/product/new")
@@ -40,5 +50,21 @@ public class ProductController {
 
         return productService.getByIdProduct(productId);
     }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product, @PathVariable(name = "productId")Integer productId){
+        Product productResponse = productService.modifyProduct(product, productId);
+        return new ResponseEntity<>(productResponse, HttpStatus.OK);
+    }
+
+
+
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<String> deleteProduct(@PathVariable(name = "productId")Integer productId) {
+        productService.deleteProduct(productId);
+        return new ResponseEntity<>("Deleted successfully", HttpStatus.OK);
+    }
+
+
 
 }
