@@ -13,7 +13,7 @@ import java.util.List;
 
 //@RestController indica que esta clase sera utilizada como controller del programa
 @RequestMapping("/product")
-
+@CrossOrigin
 @RestController
 public class ProductController {
 
@@ -38,9 +38,11 @@ public class ProductController {
     }
 
     @PostMapping("/product/new")
-    public Product newProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> newProduct(@RequestBody Product product) {
 
-        return productService.createProduct(product);
+        Product productResponse = productService.createProduct(product);
+        return new ResponseEntity<>(productResponse, HttpStatus.OK);
+        //return ResponseEntity.ok(productService.createProduct(product));
     }
 
     @GetMapping("/product/byIdProduct/{productId}")
