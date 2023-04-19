@@ -52,6 +52,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String deleteProduct(Integer id) {
-        return null;
+
+        productRepository.deleteById(id);
+
+        return "Deleted";
     }
 }
